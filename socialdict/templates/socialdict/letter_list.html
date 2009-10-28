@@ -1,0 +1,8 @@
+{% if object_list.count %}
+    {% for term in object_list %}
+    <h2>{{ term.name }}</h2>
+    <p>{{ term.meaning }}</p>
+    {% endfor %}
+{% else %}
+    <h2>Nothing to show.</h2>
+{% endif%}

@@ -1,0 +1,9 @@
+<form action="" method="POST">
+    {% if form.unbound_errors %}
+        {{ form.unbound_errors }}
+    {% endif %}
+    {{ form.as_p }}
+    <p>
+        <input type="submit" value="Send" />
+    </p>
+</form>
