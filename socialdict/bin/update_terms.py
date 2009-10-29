@@ -14,7 +14,7 @@ from django.utils import simplejson
 from django.utils.safestring import mark_safe
 
 
-DATETIME_FORMAT = '%a, %d %b %Y %H:%M%S +0000'
+DATETIME_FORMAT = '%a, %d %b %Y %H:%M:%S +0000'
 
 
 def update_terms(verbose=False):
@@ -30,6 +30,7 @@ def update_terms(verbose=False):
             (term, meaning) = parse(result['text'])
             author = result['from_user']
             status_id = result['id']
+            created_at = result['created_at']
             try:
                 # Only add if it doesn't exist
                 if Term.objects.get(status_id=status_id):
@@ -44,7 +45,8 @@ def update_terms(verbose=False):
                 new_term.status_id = status_id
                 # Try to match a valid datetime object
                 try:
-                    new_term.date_added = datetime.strptime(DATETIME_FORMAT)
+                    created = datetime.strptime(created_at, DATETIME_FORMAT)
+                    new_term.date_added = created
                 except ValueError:
                     pass
                 new_term.save()
