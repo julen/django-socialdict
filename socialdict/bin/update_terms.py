@@ -11,7 +11,6 @@ from datetime import datetime
 
 from django.conf import settings
 from django.utils import simplejson
-from django.utils.safestring import mark_safe
 
 
 DATETIME_FORMAT = '%a, %d %b %Y %H:%M:%S +0000'
@@ -40,7 +39,7 @@ def update_terms(verbose=False):
             except Term.DoesNotExist:
                 new_term = Term()
                 new_term.name = term
-                new_term.meaning = mark_safe(meaning)
+                new_term.meaning = meaning
                 new_term.social_user = author
                 new_term.status_id = status_id
                 # Try to match a valid datetime object
