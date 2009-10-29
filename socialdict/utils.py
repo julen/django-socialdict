@@ -18,6 +18,6 @@ def parse(text):
     parts = clean_text.split(':')
     if len(parts) != 2:
         raise
-    term = parts[0].strip()lower()
+    term = parts[0].strip().lower()
     meaning = parts[1].strip()
     return (term, meaning)
