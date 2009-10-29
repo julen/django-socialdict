@@ -19,5 +19,5 @@ def parse(text):
     if len(parts) != 2:
         raise
     term = parts[0].strip().lower()
-    meaning = parts[1].strip()
+    meaning = parts[1].strip().capitalize()
     return (term, meaning)
