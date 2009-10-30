@@ -15,6 +15,9 @@ def parse(text):
     # We discard those entries with URLs inside
     if reURL.search(clean_text):
         raise
+    # Also discard those that contain @user forms
+    if '@' in clean_text:
+        raise
     parts = clean_text.split(':')
     if len(parts) != 2:
         raise
