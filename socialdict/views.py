@@ -10,7 +10,7 @@ def letter(request, letter):
     Returns an object_list with Term objects matching 'letter' as the
     starting letter for the term.
     """
-    terms = Term.objects.filter(alphabet_letter=letter)
+    terms = Term.objects.filter(alphabet_letter=letter).order_by('name')
     return object_list(request, queryset=terms, extra_context={'letter': letter},
                        template_name='socialdict/letter_list.html')
 
