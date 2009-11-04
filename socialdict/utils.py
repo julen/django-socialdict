@@ -19,8 +19,8 @@ def parse(text):
     if '@' in clean_text:
         raise
     parts = clean_text.split(':')
-    if len(parts) != 2:
+    if len(parts) < 2:
         raise
     term = parts[0].strip().lower()
-    meaning = parts[1].strip()
+    meaning = ":".join(parts[1:]).strip()
     return (term, meaning)
