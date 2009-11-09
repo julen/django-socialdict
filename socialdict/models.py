@@ -18,6 +18,6 @@ class Term(models.Model):
         normalized_name = self.name.lower()
         self.name = normalized_name
         self.alphabet_letter = normalized_name[0]
-        if not self.meaning.endswith('.'):
+        if not self.meaning.endswith(('.', '!', '?')):
             self.meaning = self.meaning + u'.'
         super(Term, self).save()
