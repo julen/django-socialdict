@@ -3,7 +3,7 @@ import re
 from django.conf import settings
 
 reURL = re.compile("([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}|(((news|telnet|nttp|file|http|ftp|https)://)|(www|ftp)[-A-Za-z0-9]*\\.)[-A-Za-z0-9\\.]+)(:[0-9]*)?")
-hashtag = "#%s" % settings.SOCIAL_HASHTAG
+hashtag = "#%s" % settings.SOCIALDICT_HASHTAG
 reHASH = re.compile(hashtag, re.IGNORECASE)
 
 def parse(text):
@@ -23,4 +23,4 @@ def parse(text):
         raise
     term = parts[0].strip().lower()
     meaning = ":".join(parts[1:]).strip()
-    return (term, meaning)
+    return term, meaning
