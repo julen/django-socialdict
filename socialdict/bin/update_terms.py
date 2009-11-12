@@ -5,53 +5,30 @@ Update term objects by querying Twitter search methods.
 import os
 import optparse
 import sys
-import urllib2
-
-from datetime import datetime
 
 from django.conf import settings
-from django.utils import simplejson
 
 
-DATETIME_FORMAT = '%a, %d %b %Y %H:%M:%S +0000'
-
+def print_status(status):
+    """Outputs the added/not added terms."""
+    for success, term in status:
+        if success:
+            print "Added: %s" % term
+        else:
+            if term:
+                print "Not added: %s" % term
 
 def update_terms(verbose=False):
-    from socialdict.models import Term
-    from socialdict.utils import parse
-
-    search = urllib2.urlopen('%s%s' % (settings.SOCIAL_URL,
-                                       settings.SOCIAL_HASHTAG))
-    response = simplejson.loads(search.read())
-    for result in response['results']:
-        # Try parsing text
+    """Calls the backends to actually update the database terms."""
+    for be in settings.SOCIALDICT_BACKENDS:
         try:
-            (term, meaning) = parse(result['text'])
-            author = result['from_user']
-            status_id = result['id']
-            created_at = result['created_at']
-            try:
-                # Only add if it doesn't exist
-                if Term.objects.get(status_id=status_id):
-                    if verbose:
-                        print "Not adding: '%s'" % term
-                    continue
-            except Term.DoesNotExist:
-                new_term = Term()
-                new_term.name = term
-                new_term.meaning = meaning
-                new_term.social_user = author
-                new_term.status_id = status_id
-                # Try to match a valid datetime object
-                try:
-                    created = datetime.strptime(created_at, DATETIME_FORMAT)
-                    new_term.date_added = created
-                except ValueError:
-                    pass
-                new_term.save()
-                if verbose:
-                    print "Added: '%s'" % term
-        except:
+            backends = __import__('socialdict.backends', fromlist=[be])
+            backend = getattr(backends, be)
+            status = backend.update_database_terms()
+            if verbose:
+                print_status(status)
+        except ImportError, e:
+            print e
             pass
 
 def main(argv):
