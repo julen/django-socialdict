@@ -5,19 +5,29 @@ http://github.com/julen/django-socialdict
 
 socialdict is a django app that retrieves terms from microblogging sites and stores and displays them as a simple dictionary.
 
-Currently terms can only be retrieved from a single backed, although support for multiple sites is planned.
 
 Installation
 ------------
 
 * Add 'socialdict' to your INSTALLED_APPS and sync your database.
+
 * In your project settings file you need to add the following settings:
-SOCIAL_URL : the URL string to perform the search
-SOCIAL_HASHTAG : the hashtag that will be used to retrieve terms.
+
+- SOCIALDICT_BACKENDS: a tuple containing the strings of the module names
+                       to be used to retrieve terms from.
+    Example:
+    SOCIALDICT_BACKENDS = ('twitter',)
+
+- SOCIALDICT_HASHTAG: the hashtag that will be used to retrieve terms.
+    Example:
+    SOCIALDICT_HASHTAG = 'hitzokei'
+
 * Include socialdict.urls within your project's URL structure.
+
 * To retrieve terms you need to setup a cron job that calls the socialdict/bin/update_terms.py. You can also run this script from the command line.
 
-How it w orks
+
+How it works
 -------------
 
 Terms are retrieved based on a certain hashtag and there is a parser that defines what goes in and what goes out. Currently entries that contain URLs or the at-sign are discarded, since they can lead to false positives. The hastag is deleted and a colon character splits the term and the meaning.
