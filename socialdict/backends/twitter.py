@@ -9,9 +9,9 @@ from django.conf import settings
 from socialdict.backends import common
 from socialdict.models import Term
 
+MODULE_NAME = 'Twitter'
 SEARCH_URL = 'http://search.twitter.com/search.json?rpp=100&q=%%23%(hashtag)s' %\
              { 'hashtag': settings.SOCIALDICT_HASHTAG }
-
 DATETIME_FORMAT = '%a, %d %b %Y %H:%M:%S +0000'
 
 def update_database_terms():
