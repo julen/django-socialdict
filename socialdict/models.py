@@ -27,7 +27,10 @@ class Term(models.Model):
     def save(self):
         normalized_name = self.name.lower()
         self.name = normalized_name
-        self.alphabet_letter = normalized_name[0]
+        i = 0
+        while not normalized_name[i].isalpha():
+            i += 1
+        self.alphabet_letter = normalized_name[i]
         if not self.meaning.endswith(('.', '!', '?')):
             self.meaning = self.meaning + u'.'
         super(Term, self).save()
