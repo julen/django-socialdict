@@ -23,10 +23,13 @@ def add_term(text, author, id, date, source):
         """Checks if a definition with the given data exists."""
         try:
             Term.objects.get(status_id=status_id, source=source)
-            Term.objects.get(name=term, meaning=meaning)
             return True
         except Term.DoesNotExist:
-            return False
+            try:
+                Term.objects.get(name=term, meaning=meaning)
+                return True
+            except Term.DoesNotExist:
+                return False
 
     try:
         term, meaning = utils.parse(text)
