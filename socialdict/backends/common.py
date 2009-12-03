@@ -40,6 +40,7 @@ def add_term(text, author, id, date, source):
             new_term.meaning = meaning
             new_term.social_user = author
             new_term.status_id = id
+            new_term.date_added = date
             new_term.source = source
             new_term.save()
             return True, term
