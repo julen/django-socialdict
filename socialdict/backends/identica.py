@@ -7,12 +7,11 @@ from datetime import datetime
 from django.conf import settings
 
 from socialdict.backends import common
-from socialdict.models import Term
 
-MODULE_NAME = 'Identi.ca'
 SEARCH_URL = 'http://identi.ca/api/search.json?rpp=100&q=%%23%(hashtag)s' %\
              { 'hashtag': settings.SOCIALDICT_HASHTAG }
 DATETIME_FORMAT = '%a, %d %b %Y %H:%M:%S +0000'
+SOURCE = 'identica'
 
 def update_database_terms():
     """Reads the Identi.ca API response and passes the necessary data
@@ -27,6 +26,12 @@ def update_database_terms():
         except ValueError:
             created = None
         st = common.add_term(result['text'], result['from_user'],
-                             result['id'], created, Term.IDENTICA_SOURCE)
+                             result['id'], created, SOURCE)
         status.append(st)
     return status
+
+def build_url(user, id):
+    """Creates a valid Identi.ca message URL based on the status_id
+       of the message.
+    """
+    return "http://identi.ca/notice/%s" % (id)

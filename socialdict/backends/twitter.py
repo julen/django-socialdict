@@ -7,12 +7,11 @@ from datetime import datetime
 from django.conf import settings
 
 from socialdict.backends import common
-from socialdict.models import Term
 
-MODULE_NAME = 'Twitter'
 SEARCH_URL = 'http://search.twitter.com/search.json?rpp=100&q=%%23%(hashtag)s' %\
              { 'hashtag': settings.SOCIALDICT_HASHTAG }
 DATETIME_FORMAT = '%a, %d %b %Y %H:%M:%S +0000'
+SOURCE = 'twitter'
 
 def update_database_terms():
     """Reads the Twitter API response and passes the necessary data
@@ -27,6 +26,12 @@ def update_database_terms():
         except ValueError:
             created = None
         st = common.add_term(result['text'], result['from_user'],
-                             result['id'], created, Term.TWITTER_SOURCE)
+                             result['id'], created, SOURCE)
         status.append(st)
     return status
+
+def build_url(user, id):
+    """Creates a valid Twitter message URL based on the user id and the
+       status_id of the message.
+    """
+    return "http://twitter.com/%s/status/%s" % (user, id)

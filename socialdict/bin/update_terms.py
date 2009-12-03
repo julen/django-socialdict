@@ -26,7 +26,7 @@ def update_terms(verbose=False):
             backend = getattr(backends, be)
             status = backend.update_database_terms()
             if verbose:
-                print "\nStatus for %s" % backend.MODULE_NAME
+                print "\nStatus for '%s'" % backend.SOURCE
                 print_status(status)
         except ImportError, e:
             print e
