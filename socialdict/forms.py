@@ -7,4 +7,4 @@ class TermForm(forms.ModelForm):
 
     class Meta:
         model = Term
-        exclude = ('alphabet_letter', 'date_added')
+        exclude = ('status_id', 'alphabet_letter', 'date_added', 'source')
