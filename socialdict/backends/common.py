@@ -6,7 +6,7 @@ from urllib2 import urlopen
 
 from django.utils import simplejson
 
-from socialdict import utils
+from socialdict.utils import parse
 from socialdict.models import Term
 
 def load_json_response(url):
@@ -26,13 +26,13 @@ def add_term(text, author, id, date, source):
             return True
         except Term.DoesNotExist:
             try:
-                Term.objects.get(name=term, meaning=meaning)
+                Term.objects.get(name__iexact=term, meaning__icontains=meaning)
                 return True
             except Term.DoesNotExist:
                 return False
 
     try:
-        term, meaning = utils.parse(text)
+        term, meaning = parse(text)
         # Only add term if it doesn't exist
         if not term_exists(id, source, term, meaning):
             new_term = Term()
