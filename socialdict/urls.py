@@ -8,8 +8,10 @@ urlpatterns = patterns('',
      { 'queryset': Term.objects.all().order_by('name') },
      'socialdict_term_archive_index'),
 
-    (r'^(?P<letter>\w)/?$',
+    (r'^(?P<letter>\w)/(?P<page>[0-9]+)/?$',
      'socialdict.views.letter'),
+    (r'^(?P<letter>\w)/?$',
+     'socialdict.views.letter', {'page': 1}),
 
     (r'^add/?$',
      'socialdict.views.add', {},
