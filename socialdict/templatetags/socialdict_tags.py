@@ -1,4 +1,6 @@
 from django import template
+from django.db.models import Count
+
 from socialdict.models import Term
 
 register = template.Library()
@@ -22,3 +24,10 @@ def render_socialdict_totals():
     term_count = Term.objects.all().count()
     author_count = Term.objects.values('social_user').distinct().count()
     return { 'term_count': term_count, 'author_count': author_count }
+
+@register.inclusion_tag('socialdict/top_authors_snippet.html')
+def render_socialdict_top_authors(num):
+    top_authors = Term.objects.values('social_user')\
+                      .annotate(contributions=Count('social_user'))\
+                      .order_by('-contributions')[:num]
+    return { 'top_authors': top_authors }
