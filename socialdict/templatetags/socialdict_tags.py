@@ -1,7 +1,11 @@
+import locale
+
 from django import template
 from django.db.models import Count
 
 from socialdict.models import Term
+
+locale.setlocale(locale.LC_ALL, 'eu_ES.UTF-8')
 
 register = template.Library()
 
@@ -17,6 +21,7 @@ def render_socialdict_alphabet():
     for letter in alphabet:
         letter_count = Term.objects.filter(alphabet_letter=letter).count()
         alphabet_list.append({ 'letter': letter, 'count': letter_count })
+    alphabet_list.sort(lambda x, y: locale.strcoll(x['letter'], y['letter']))
     return { 'alphabet': alphabet_list }
 
 @register.inclusion_tag('socialdict/totals_snippet.html')
