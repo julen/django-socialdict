@@ -4,7 +4,10 @@ Update term objects by querying Twitter search methods.
 
 import os
 import optparse
+import site
 import sys
+
+site.addsitedir('/srv/www/hitzokei/env/lib/python2.5/site-packages')
 
 from django.conf import settings
 
