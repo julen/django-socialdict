@@ -9,7 +9,7 @@ current_site = Site.objects.get_current()
 class LatestEntriesFeed(Feed):
     author_name =  "hitzokei"
     copyright = "http://%s/about/" % current_site.domain
-    description = "Jendeak botatako azken hitzokeiak."
+    description = "Azken hitzokeiak."
     feed_type = Atom1Feed
     item_copyright = "http://%s/about/" % current_site.domain
     link = "/feed/entries/"
@@ -32,3 +32,5 @@ class LatestEntriesFeed(Feed):
     def item_link(self, item):
         return item.get_term_url()
 
+    def item_description(self, item):
+        return item.meaning
