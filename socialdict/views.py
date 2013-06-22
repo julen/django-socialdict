@@ -1,20 +1,30 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.views.generic.list_detail import object_list
+from django.views.generic.list import ListView
 
 from socialdict.forms import TermForm
 from socialdict.models import Term 
 
-def letter(request, letter, page):
-    """
-    Returns an object_list with Term objects matching 'letter' as the
-    starting letter for the term.
-    """
-    terms = Term.objects.filter(alphabet_letter=letter).order_by('name')
-    return object_list(request, queryset=terms,
-                       paginate_by=10, page=page,
-                       extra_context={'letter': letter},
-                       template_name='socialdict/letter_list.html')
+
+class LetterView(ListView):
+
+    template_name = 'socialdict/letter_list.html'
+    paginate_by = 10
+
+    def dispatch(self, request, *args, **kwargs):
+        self.letter = kwargs['letter']
+        return super(LetterView, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        ctx = super(LetterView, self).get_context_data(**kwargs)
+        ctx.update({
+            'letter': self.letter,
+        })
+        return ctx
+
+    def get_queryset(self):
+        return Term.objects.filter(alphabet_letter=self.letter) \
+                           .order_by('name')
 
 def add(request):
     """

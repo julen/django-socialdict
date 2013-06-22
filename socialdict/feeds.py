@@ -1,6 +1,6 @@
 from django.utils.feedgenerator import Atom1Feed
 from django.contrib.sites.models import Site
-from django.contrib.syndication.feeds import Feed
+from django.contrib.syndication.views import Feed
 
 from socialdict.models import Term
 

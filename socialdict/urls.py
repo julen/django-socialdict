@@ -1,21 +1,18 @@
-from django.conf.urls.defaults import *
+from django.conf.urls import patterns, url
 
 from socialdict.models import Term 
+from socialdict.views import LetterView
+
 
 urlpatterns = patterns('',
-    (r'^all/?$',
-     'django.views.generic.list_detail.object_list',
-     { 'queryset': Term.objects.all().order_by('name') },
-     'socialdict_term_archive_index'),
+    url(r'^(?P<letter>\w)/(?P<page>[0-9]+)/?$',
+        LetterView.as_view(),
+        name='socialdict_letter_view_page'),
+    url(r'^(?P<letter>\w)/?$',
+        LetterView.as_view(),
+        name='socialdict_letter_view'),
 
-    (r'^(?P<letter>\w)/(?P<page>[0-9]+)/?$',
-     'socialdict.views.letter', {},
-     'socialdict_letter_view_page'),
-    (r'^(?P<letter>\w)/?$',
-     'socialdict.views.letter', {'page': 1},
-     'socialdict_letter_view'),
-
-    (r'^add/?$',
-     'socialdict.views.add', {},
-     'socialdict_add_term'),
+    url(r'^add/?$',
+        'socialdict.views.add',
+        name='socialdict_add_term'),
 )
