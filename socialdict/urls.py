@@ -12,7 +12,7 @@ urlpatterns = patterns('',
         LetterView.as_view(),
         name='socialdict_letter_view'),
 
-    url(r'^add/?$',
-        'socialdict.views.add',
-        name='socialdict_add_term'),
+    #url(r'^add/?$',
+    #    'socialdict.views.add',
+    #    name='socialdict_add_term'),
 )
