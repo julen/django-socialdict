@@ -7,7 +7,7 @@ import optparse
 import site
 import sys
 
-site.addsitedir('/srv/www/hitzokei/env/lib/python2.5/site-packages')
+site.addsitedir('/srv/www/hitzokei/env/lib/python2.6/site-packages')
 
 from django.conf import settings
 
