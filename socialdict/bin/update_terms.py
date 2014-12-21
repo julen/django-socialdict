@@ -21,6 +21,7 @@ def print_status(status):
             if term:
                 print "Not added: %s" % term
 
+
 def update_terms(verbose=False):
     """Calls the backends to actually update the database terms."""
     for be in settings.SOCIALDICT_BACKENDS:
@@ -35,6 +36,7 @@ def update_terms(verbose=False):
             print e
             pass
 
+
 def main(argv):
     parser = optparse.OptionParser()
     parser.add_option('--settings')
@@ -43,6 +45,7 @@ def main(argv):
     if options.settings:
         os.environ["DJANGO_SETTINGS_MODULE"] = options.settings
     update_terms(options.verbose)
+
 
 if __name__ == '__main__':
     main(sys.argv)

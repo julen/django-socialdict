@@ -26,6 +26,7 @@ class LetterView(ListView):
         return Term.objects.filter(alphabet_letter=self.letter) \
                            .order_by('name')
 
+
 def add(request):
     """
     Returns a form to add new terms.
@@ -36,6 +37,7 @@ def add(request):
             form.save()
     else:
         form = TermForm()
+
     return render_to_response('socialdict/add_term.html', {'form': form},
                               context_instance=RequestContext(request))
 

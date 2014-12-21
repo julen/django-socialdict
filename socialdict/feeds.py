@@ -1,10 +1,12 @@
-from django.utils.feedgenerator import Atom1Feed
 from django.contrib.sites.models import Site
 from django.contrib.syndication.views import Feed
+from django.utils.feedgenerator import Atom1Feed
 
 from socialdict.models import Term
 
+
 current_site = Site.objects.get_current()
+
 
 class LatestEntriesFeed(Feed):
     author_name =  "hitzokei"

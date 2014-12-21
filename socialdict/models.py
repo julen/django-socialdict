@@ -3,6 +3,7 @@ import datetime
 from django.db import models
 from django.utils.translation import ugettext as _
 
+
 class Term(models.Model):
     WEB_SOURCE = "web"
 
@@ -10,7 +11,8 @@ class Term(models.Model):
     meaning = models.CharField(max_length=140, verbose_name=_("Meaning"))
     status_id = models.IntegerField(blank=True)
     alphabet_letter = models.CharField(max_length=1, blank=True)
-    social_user = models.CharField(max_length=50, blank=True, verbose_name=_("User"))
+    social_user = models.CharField(max_length=50, blank=True,
+                                   verbose_name=_("User"))
     date_added = models.DateTimeField(default=datetime.datetime.now)
     source = models.CharField(max_length=50, default=WEB_SOURCE)
 

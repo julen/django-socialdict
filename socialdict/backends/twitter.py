@@ -11,6 +11,7 @@ from django.conf import settings
 
 from socialdict.backends import common
 
+
 SEARCH_URL = 'http://search.twitter.com/search.json' %\
              { 'hashtag': settings.SOCIALDICT_HASHTAG }
 API_BASE = 'https://api.twitter.com/1.1/'
@@ -24,6 +25,7 @@ tweets_params = {
 
 DATETIME_FORMAT = '%a %b %d %H:%M:%S +0000 %Y'
 SOURCE = 'twitter'
+
 
 def update_database_terms():
     """Reads the Twitter API response and passes the necessary data
@@ -47,6 +49,7 @@ def update_database_terms():
                              result['id'], created, SOURCE)
         status.append(st)
     return status
+
 
 def build_url(user, id):
     """Creates a valid Twitter message URL based on the user id and the

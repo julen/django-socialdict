@@ -9,10 +9,12 @@ from django.utils import simplejson
 from socialdict.utils import parse
 from socialdict.models import Term
 
+
 def load_json_response(url):
     """Loads the given URL and returns the JSON response."""
     search = urlopen(url)
     return simplejson.loads(search.read())
+
 
 def add_term(text, author, id, date, source):
     """Given the necessary data for a term, tries to check for
