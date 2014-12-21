@@ -28,9 +28,9 @@ class Term(models.Model):
         super(Term, self).save()
 
     def get_term_url(self):
-        if self.source != self.WEB_SOURCE:
-            backends = __import__('socialdict.backends', fromlist=[str(self.source)])
-            backend = getattr(backends, self.source)
-            return backend.build_url(self.social_user, self.status_id)
-        else:
+        if self.source == self.WEB_SOURCE:
             return ''
+
+        backends = __import__('socialdict.backends', fromlist=[str(self.source)])
+        backend = getattr(backends, self.source)
+        return backend.build_url(self.social_user, self.status_id)
