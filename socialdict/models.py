@@ -24,8 +24,7 @@ class Term(models.Model):
         while not normalized_name[i].isalpha():
             i += 1
         self.alphabet_letter = normalized_name[i]
-        if not self.meaning.endswith(('.', '!', '?')):
-            self.meaning = self.meaning + u'.'
+
         super(Term, self).save()
 
     def get_term_url(self):
